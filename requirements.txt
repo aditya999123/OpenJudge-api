@@ -1,0 +1,4 @@
+psycopg2 == 2.7.3.2
+django == 1.11
+PyJWT == 1.5.3
+celery == 4.1.0

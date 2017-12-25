@@ -6,6 +6,11 @@ __pycache__/
 # C extensions
 *.so
 
+# custom
+media/
+static/
+general/
+
 # Distribution / packaging
 .Python
 env/
