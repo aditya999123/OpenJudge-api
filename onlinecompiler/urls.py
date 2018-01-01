@@ -16,10 +16,8 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from login.api import login, access_token, usernames, register
-from contests.api import contest
-from problems.api import contest_problems, problem, testcases
-from execute.api import submit
+from .api import *
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/login/', login),
