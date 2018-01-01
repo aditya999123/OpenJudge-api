@@ -10,7 +10,7 @@ from execute.utils import write_file, delete_folder_files, create_folder, IN, EX
 from onlinecompiler.settings import MEDIA_ROOT
 # @JWT
 # @ROLE('USER', 'ADMIN')
-def contest_problems_GET(request, contest_code):
+def contest_problems_GET(request, body, contest_code):
 	response = {}
 	response['success'] = True
 	contest = get_or_none(contest_data, code = contest_code)
@@ -22,15 +22,15 @@ def contest_problems_GET(request, contest_code):
 
 @JWT
 @ROLE('ADMIN')
-def contest_problems_POST(request, user, response, contest_code):
+def contest_problems_POST(request, body, user, response, contest_code):
 	contest = get_or_none(contest_data, code = contest_code)
 	assert_found(contest, 'no contest with this code')
 	assert_allowed(contest.owner == user, "you are not allowed to update this contest")
 
-	title = request.POST.get('title')
-	code = request.POST.get('code')	
-	description = request.POST.get('description')
-	enabled = bool(request.POST.get('enabled', True))
+	title = body['title']
+	code = body['code']	
+	description = body['description']
+	enabled = bool(body['enabled'])
 
 	problem = get_or_none(problems_data, code = code)
 	if problem:
@@ -51,7 +51,7 @@ def contest_problems_POST(request, user, response, contest_code):
 	response['problem'] = get_json_serializable(problem)
 	return JsonResponse(response)
 
-def problem_GET(request, problem_code):
+def problem_GET(request, body, problem_code):
 	response = {}
 	response['success'] = True
 	problem = get_or_none(problems_data, code = problem_code)
@@ -62,15 +62,15 @@ def problem_GET(request, problem_code):
 
 @JWT
 @ROLE('ADMIN')
-def problem_POST(request, user, response, problem_code):
+def problem_POST(request, body, user, response, problem_code):
 	problem = get_or_none(problems_data, code = problem_code)
 	assert_found(problem, 'problem not found')
 	assert_allowed(problem.contest.owner == user, "you cannot update the problem")
 	
-	id = request.POST.get('id', False)
-	score = int(request.POST.get('score'))
-	enabled = bool(request.POST.get('enabled', True))
-	time_limit = int(request.POST.get('time_limit', 1))
+	id = body['id']
+	score = int(body['score'])
+	enabled = bool(body['enabled'])
+	time_limit = int(body['time_limit'])
 
 	if id == False:
 		print"new testcase"
@@ -124,7 +124,7 @@ def problem_POST(request, user, response, problem_code):
 
 @JWT
 @ROLE('ADMIN')
-def testcases_GET(request, user, response, problem_code):
+def testcases_GET(request, body, user, response, problem_code):
 	problem = get_or_none(problems_data, code = problem_code)
 	assert_found(problem, 'problem not found')
 	assert_allowed(problem.contest.owner == user, "access denied to the problem details")

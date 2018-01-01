@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'respHeaders.middleware.ModifyResponseWithHeaders',
 ]
 
 ROOT_URLCONF = 'onlinecompiler.urls'

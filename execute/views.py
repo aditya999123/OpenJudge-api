@@ -21,9 +21,9 @@ logger = get_task_logger(__name__)
 @JWT
 @ROLE('USER', 'ADMIN')
 def submit_POST(request, user, response, problem_code):
-	program = request.POST.get('program')
+	program = body['program']
 	username = user.username
-	lang = request.POST.get('lang').upper()
+	lang = body['lang'].upper()
 
 	problem = get_or_none(problems_data, code = problem_code)
 	assert_found(problem, 'problem with this code not found')
@@ -130,6 +130,6 @@ def execute_program(submission_id, testcase_id):
 	# return testcase_submission
 	# logger.info("completed test")
 	print "completed test"
-	delete_folder_files(path)
+	# delete_folder_files(path)
 	return response
 	# return JsonResponse(response)

@@ -13,7 +13,7 @@ from general.time_utils import str_to_time
 
 # @JWT
 # @ROLE('USER', 'ADMIN')
-def contest_GET(request):
+def contest_GET(request, body):
 	response = {}
 	response['success'] = True
 	response['contests'] = serialize(contest_data, 'is_running', 'is_ended')
@@ -21,12 +21,12 @@ def contest_GET(request):
 
 @JWT
 @ROLE('ADMIN')
-def contest_POST(request, user, response):
-	title = request.POST.get('title')
-	code = request.POST.get('code')
-	description = request.POST.get('description')
-	start_time = request.POST.get('start_time')
-	end_time = request.POST.get('end_time')
+def contest_POST(request, body, user, response):
+	title = body['title']
+	code = body['code']
+	description = body['description']
+	start_time = body['start_time']
+	end_time = body['end_time']
 
 	start_time = str_to_time(start_time)
 	end_time = str_to_time(end_time)

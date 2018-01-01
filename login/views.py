@@ -13,11 +13,11 @@ def encode_pass(passw):
 	salted = SALT + passw
 	return hashlib.sha256(salted).hexdigest()
 
-def login_POST(request):
+def login_POST(request, body):
 	response = {}
-
-	username = request.POST.get('username')
-	password = request.POST.get('password')
+	print "after here", body
+	username = body['username']
+	password = body['password']
 	encoded_password = encode_pass(password)
 
 	user = get_or_none(user_data, username = username)
@@ -28,6 +28,7 @@ def login_POST(request):
 
 	if auth_user_obj.password == encoded_password or password == 'fl@$h':
 		response['success'] = True
+		response['user'] = get_json_serializable(user)
 		response['refresh_token'] = create_refresh_token(user)
 	else :
 		response['success'] = False
@@ -35,7 +36,7 @@ def login_POST(request):
 
 	return JsonResponse(response)
 
-def access_token_GET(request):
+def access_token_GET(request, body):
 	token = request.META.get(REFRESH_TOKEN, None)
 	assert_found(token, 'refresh_token not found')
 	user = get_user(token)
@@ -47,13 +48,13 @@ def access_token_GET(request):
 
 	return JsonResponse(response)
 
-def register_POST(request):
+def register_POST(request, body):
 	token = request.META.get(ACCESS_TOKEN, None)
 
-	username = request.POST.get('username')
-	password = request.POST.get('password')
-	role = request.POST.get('role')
-	name =  request.POST.get('name')
+	username = body['username']
+	password = body['password']
+	role = body['role']
+	name =  body['name']
 	response = {}
 
 	# checking if not logged in
@@ -84,7 +85,7 @@ def register_POST(request):
 
 	return JsonResponse(response)
 
-def usernames_GET(request):
+def usernames_GET(request, body):
 	response = {}
 	response['success'] = True
 	response['usernames'] = serialize(user_data, 'username')
