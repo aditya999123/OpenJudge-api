@@ -42,8 +42,6 @@ def VMS(*methods):
 		return view_name_segregator
 	return _function_wrapper
 
-
-
 @VMS('POST')
 def login(request):
 	pass
