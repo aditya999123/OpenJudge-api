@@ -25,7 +25,10 @@ def VMS(*methods):
 		def view_name_segregator(request, *args, **kwargs):
 			if request.method in methods:
 				try:
-					body = json.loads(request.body)
+					if request.body:
+						body = json.loads(request.body)
+					else:
+						body = {}
 					return eval(get_view(function.__name__, request.method))
 				except Exception as e:
 					print "// " , e , " //"
