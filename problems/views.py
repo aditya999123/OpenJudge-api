@@ -14,6 +14,7 @@ def contest_problems_GET(request, body, contest_code):
 	response = {}
 	response['success'] = True
 	contest = get_or_none(contest_data, code = contest_code)
+	print contest
 	assert_found(contest, 'no contest with this code')
 	assert_allowed(contest.is_running or contest.is_ended, 'contest hasn\'t started yet')
 	response['problems'] = serialize(problems_data, 'get_submission_count', contest = contest, enabled = True)

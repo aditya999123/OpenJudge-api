@@ -22,13 +22,13 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/login/', login),
     url(r'^api/access_token/', access_token),
-    url(r'^api/contest/', contest),
     url(r'^api/usernames/', usernames),
     url(r'^api/register/', register),
     url(r'^api/problem/(?P<problem_code>\w+)', problem),
     url(r'^api/testcases/(?P<problem_code>\w+)', testcases),
     url(r'^api/submit/(?P<problem_code>\w+)', submit),
-    url(r'^api/(?P<contest_code>\w+)/', contest_problems),
+    url(r'^api/contest/(?P<contest_code>\w+)', contest_problems),
+    url(r'^api/contests/', contest),
 ]
 
 
