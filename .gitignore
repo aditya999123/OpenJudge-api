@@ -9,7 +9,6 @@ __pycache__/
 # custom
 media/
 static/
-general/
 
 # Distribution / packaging
 .Python
